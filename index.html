@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>StayHub Kenya | Find Unique Stays</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+<div class="logo">
+🏡 StayHub
+</div>
+
+<nav class="nav-links">
+
+<a href="listings.html">
+Explore
+</a>
+
+<a href="#" onclick="goToHost()">
+Host your space
+</a>
+
+<a href="#" onclick="goToLogin()">
+Login
+</a>
+
+</nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-overlay"></div>
+
+<div class="hero-content">
+
+<h1>
+Find unique stays across Kenya
+</h1>
+
+<p>
+Hotels • Airbnb • Villas • Safari Lodges
+</p>
+
+<div class="search-box">
+
+<input
+type="text"
+placeholder="Search destination (Watamu, Nairobi, Diani...)"
+>
+
+<button onclick="goToListings()">
+Search
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FEATURED STAYS -->
+
+<section class="section">
+
+<div class="section-header">
+
+<h2 class="section-title">
+Featured Stays
+</h2>
+
+<a href="listings.html" class="see-all">
+View All →
+</a>
+
+</div>
+
+<div class="carousel" id="carousel">
+
+<!-- CARD 1 -->
+
+<div class="card">
+
+<div class="card-img img1"></div>
+
+<div class="card-content">
+
+<h3>Coral Bay Resort</h3>
+
+<p>Watamu • Beach Hotel</p>
+
+<div class="price">
+KES 8,500/night
+</div>
+
+<button onclick="openModal(1)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD 2 -->
+
+<div class="card">
+
+<div class="card-img img2"></div>
+
+<div class="card-content">
+
+<h3>Beach Apartment</h3>
+
+<p>Watamu • Airbnb</p>
+
+<div class="price">
+KES 6,000/night
+</div>
+
+<button onclick="openModal(2)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD 3 -->
+
+<div class="card">
+
+<div class="card-img img3"></div>
+
+<div class="card-content">
+
+<h3>Nairobi City Hotel</h3>
+
+<p>Nairobi • Hotel</p>
+
+<div class="price">
+KES 7,000/night
+</div>
+
+<button onclick="openModal(3)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD 4 -->
+
+<div class="card">
+
+<div class="card-img img1"></div>
+
+<div class="card-content">
+
+<h3>Diani Ocean Villa</h3>
+
+<p>Diani • Villa</p>
+
+<div class="price">
+KES 12,000/night
+</div>
+
+<button onclick="openModal(4)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD 5 -->
+
+<div class="card">
+
+<div class="card-img img2"></div>
+
+<div class="card-content">
+
+<h3>Naivasha Safari Lodge</h3>
+
+<p>Naivasha • Lodge</p>
+
+<div class="price">
+KES 5,500/night
+</div>
+
+<button onclick="openModal(5)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD 6 -->
+
+<div class="card">
+
+<div class="card-img img3"></div>
+
+<div class="card-content">
+
+<h3>Lamu Luxury Retreat</h3>
+
+<p>Lamu • Villa</p>
+
+<div class="price">
+KES 14,000/night
+</div>
+
+<button onclick="openModal(5)">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal()">
+&times;
+</span>
+
+<img
+id="modalImage"
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:12px;
+margin-bottom:15px;
+"
+>
+
+<h2 id="modalTitle"></h2>
+
+<p id="modalLocation"></p>
+
+<h3 id="modalPrice"></h3>
+
+<p id="modalDesc"></p>
+
+<button
+style="
+width:100%;
+padding:14px;
+background:#ff385c;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+margin-top:10px;
+">
+Reserve Now
+</button>
+
+</div>
+
+</div>
+
+<!-- WHY CHOOSE US -->
+
+<section class="section">
+
+<h2 class="section-title">
+Why StayHub?
+</h2>
+
+<div class="features-grid">
+
+<div class="feature">
+
+<h3>🏖 Verified Properties</h3>
+
+<p>
+Every stay is reviewed before publishing.
+</p>
+
+</div>
+
+<div class="feature">
+
+<h3>💳 Secure Payments</h3>
+
+<p>
+Safe and trusted booking experience.
+</p>
+
+</div>
+
+<div class="feature">
+
+<h3>📍 Local Experiences</h3>
+
+<p>
+Discover hidden gems across Kenya.
+</p>
+
+</div>
+
+<div class="feature">
+
+<h3>🏠 Host & Earn</h3>
+
+<p>
+Turn your property into passive income.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

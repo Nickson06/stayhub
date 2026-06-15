@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Coral Bay Resort | StayHub</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+body{
+background:#f8fafc;
+color:#111827;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:white;
+padding:18px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 2px 15px rgba(0,0,0,.05);
+}
+
+.logo{
+font-size:26px;
+font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+height:70vh;
+background:url('https://images.unsplash.com/photo-1566073771259-6a8506099945') center center/cover;
+position:relative;
+display:flex;
+align-items:flex-end;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(
+to top,
+rgba(0,0,0,.7),
+transparent
+);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+padding:60px;
+color:white;
+}
+
+.hero-content h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.hero-content p{
+font-size:18px;
+opacity:.9;
+}
+
+/* MAIN */
+
+.container{
+width:90%;
+max-width:1300px;
+margin:auto;
+padding:50px 0;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:40px;
+}
+
+/* LEFT */
+
+.content h2{
+margin-bottom:15px;
+}
+
+.description{
+line-height:1.8;
+color:#555;
+margin-bottom:30px;
+}
+
+.amenities{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.amenity{
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.05);
+}
+
+/* BOOKING CARD */
+
+.booking{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+position:sticky;
+top:100px;
+height:fit-content;
+}
+
+.price{
+font-size:32px;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.price span{
+font-size:16px;
+color:#666;
+}
+
+.booking button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#ff385c;
+color:white;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+}
+
+.booking button:hover{
+transform:translateY(-2px);
+}
+
+.rating{
+margin-bottom:15px;
+font-weight:600;
+}
+
+/* HOST */
+
+.host{
+margin-top:40px;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.05);
+}
+
+.host img{
+width:60px;
+height:60px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.hero-content h1{
+font-size:34px;
+}
+
+.hero{
+height:50vh;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo">🏡 StayHub</div>
+<a href="index.html">Home</a>
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+<h1>Coral Bay Resort</h1>
+<p>⭐ 4.9 • Watamu, Kenya</p>
+</div>
+
+</section>
+
+<section class="container">
+
+<div class="content">
+
+<h2>About this stay</h2>
+
+<p class="description">
+Experience luxury by the ocean at Coral Bay Resort.
+Enjoy stunning sea views, a private beach, infinity pool,
+high-speed Wi-Fi, breakfast included and world-class service.
+Perfect for families, couples and remote workers.
+</p>
+
+<h2>Amenities</h2>
+
+<div class="amenities">
+
+<div class="amenity">🏊 Swimming Pool</div>
+<div class="amenity">📶 Fast WiFi</div>
+<div class="amenity">🍽 Free Breakfast</div>
+<div class="amenity">🚗 Free Parking</div>
+<div class="amenity">🏖 Beach Access</div>
+<div class="amenity">❄ Air Conditioning</div>
+
+</div>
+
+<div class="host">
+
+<img src="https://i.pravatar.cc/150?img=32">
+
+<h3>Hosted by James</h3>
+
+<p>
+Super Host • Hosting for 5 years
+</p>
+
+</div>
+
+</div>
+
+<div class="booking">
+
+<div class="price">
+KES 8,500
+<span>/night</span>
+</div>
+
+<div class="rating">
+⭐ 4.9 (128 reviews)
+</div>
+
+<button>
+Reserve Now
+</button>
+
+</div>
+
+</section>
+
+</body>
+<script>
+
+const property =
+JSON.parse(
+localStorage.getItem("selectedProperty")
+);
+
+document.getElementById("propertyName")
+.innerText = property.name;
+
+document.getElementById("propertyLocation")
+.innerText = property.location;
+
+document.getElementById("propertyPrice")
+.innerText = property.price;
+
+document.getElementById("propertyDescription")
+.innerText = property.description;
+
+</script>
+</html>

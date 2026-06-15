@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | StayHub</title>
+</head>
+
+<body style="margin:0;font-family:Arial;background:#f7f7f7;">
+
+<!-- HEADER -->
+<div style="background:white;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);">
+  <div style="font-weight:bold;font-size:20px;">🏡 StayHub</div>
+  <a href="index.html" style="text-decoration:none;color:#ff385c;font-weight:bold;">← Back</a>
+</div>
+
+<!-- SIGNUP BOX -->
+<div style="max-width:400px;margin:70px auto;background:white;padding:30px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.08);text-align:center;">
+
+  <h2>Create account</h2>
+  <p style="color:#666;margin-bottom:20px;">Join StayHub to book or host stays</p>
+
+  <form onsubmit="signup(event)">
+
+    <input id="name" type="text" placeholder="Full Name"
+      style="width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;"><br>
+
+    <input id="email" type="email" placeholder="Email"
+      style="width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;"><br>
+
+    <input id="password" type="password" placeholder="Password"
+      style="width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;"><br>
+
+    <button type="submit"
+      style="width:100%;padding:14px;background:#ff385c;color:white;border:none;border-radius:10px;font-size:16px;cursor:pointer;">
+      Sign Up
+    </button>
+
+  </form>
+
+  <p style="margin-top:15px;font-size:14px;color:#666;">
+    Already have an account?
+    <a href="login.html" style="color:#ff385c;text-decoration:none;">Login</a>
+  </p>
+
+</div>
+
+<script>
+function signup(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const user = { name, email, password };
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("Account created successfully!");
+
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
