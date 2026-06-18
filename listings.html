@@ -3,7 +3,404 @@
 <head>
   <meta charset="UTF-8">
   <title>Listings | StayHub Kenya</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StayHub Listings</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Inter, Arial;
+  background:#f6f6f6;
+  color:#222;
+}
+
+/* NAV */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  padding:15px 20px;
+  background:white;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+/* FILTER */
+.filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:15px;
+  background:white;
+}
+
+.filters input{
+  flex:1;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.filters button{
+  padding:10px 12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#eee;
+}
+
+.filters button:hover{
+  background:#ff385c;
+  color:white;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:white;
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.badge{
+  position:absolute;
+  margin:10px;
+  background:#ff385c;
+  color:white;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.modal-content{
+  background:white;
+  width:100%;
+  max-width:520px;
+  border-radius:16px;
+  padding:20px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:15px;
+  top:10px;
+  cursor:pointer;
+  font-size:22px;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  padding:12px;
+  background:#ff385c;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* CHECKOUT */
+label{display:block;margin-top:10px;font-size:13px;}
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+hr{margin:15px 0;}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+  <strong>🏡 StayHub</strong>
+  <button onclick="goHome()">Home</button>
+</div>
+
+<!-- FILTER -->
+<div class="filters">
+  <input id="search" placeholder="Search stays...">
+  <button onclick="setFilter('all')">All</button>
+  <button onclick="setFilter('hotel')">Hotels</button>
+  <button onclick="setFilter('airbnb')">Airbnb</button>
+  <button onclick="setFilter('villa')">Villas</button>
+  <button onclick="setFilter('lodge')">Lodges</button>
+</div>
+
+<!-- GRID -->
+<div id="grid" class="grid"></div>
+
+<!-- PROPERTY MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+
+    <span class="close" onclick="closeModal()">×</span>
+
+    <img id="img" style="width:100%;height:220px;object-fit:cover;border-radius:12px">
+    <h2 id="title"></h2>
+    <p id="location"></p>
+    <h3 id="price"></h3>
+    <p id="desc"></p>
+
+    <button class="btn" onclick="openCheckout()">Book Now</button>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkout" class="modal">
+  <div class="modal-content">
+
+    <span class="close" onclick="closeCheckout()">×</span>
+
+    <h2>Checkout</h2>
+
+    <p id="summary"></p>
+
+    <label>Check-in</label>
+    <input type="date" id="ci">
+
+    <label>Check-out</label>
+    <input type="date" id="co">
+
+    <label>Guests</label>
+    <input type="number" id="guests" value="1" min="1">
+
+    <hr>
+
+    <p>Nights: <b id="nights">0</b></p>
+    <p>Total: <b id="total">KES 0</b></p>
+
+    <hr>
+
+    <label>Payment Method</label>
+    <select id="pay">
+      <option value="mpesa">M-Pesa</option>
+      <option value="card">Card</option>
+    </select>
+
+    <button class="btn" onclick="confirmBooking()">
+      Confirm & Pay
+    </button>
+
+  </div>
+</div>
+
+<script>
+/* =====================
+   DATA
+===================== */
+let listings = [
+  {id:1,name:"Coral Bay Resort",location:"Watamu",type:"hotel",price:8500,img:"https://images.unsplash.com/photo-1501117716987-c8e1ecb2106e",desc:"Luxury beachfront hotel with ocean view",badge:"HOT"},
+
+  {id:2,name:"Beach Apartment",location:"Watamu",type:"airbnb",price:6000,img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",desc:"Modern Airbnb near the ocean",badge:"NEW"},
+
+  {id:3,name:"Nairobi City Hotel",location:"Nairobi",type:"hotel",price:7000,img:"https://images.unsplash.com/photo-1566073771259-6a8506099945",desc:"CBD luxury hotel with skyline views",badge:"CITY"},
+
+  {id:4,name:"Diani Ocean Villa",location:"Diani",type:"villa",price:12000,img:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",desc:"Private villa with pool and ocean view",badge:"VILLA"},
+
+  {id:5,name:"Naivasha Safari Lodge",location:"Naivasha",type:"lodge",price:5500,img:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",desc:"Wildlife lodge near Lake Naivasha",badge:"SAFARI"},
+
+  {id:6,name:"Lamu Old Town Villa",location:"Lamu",type:"villa",price:14000,img:"https://images.unsplash.com/photo-1500375592092-40eb2168fd21",desc:"Historic Swahili-style island villa",badge:"HISTORIC"},
+
+  {id:7,name:"Masai Mara Safari Camp",location:"Masai Mara",type:"lodge",price:18000,img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",desc:"Luxury tented safari camp in the wild",badge:"WILD"},
+
+  {id:8,name:"Mombasa Beach Hotel",location:"Mombasa",type:"hotel",price:9000,img:"https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",desc:"Coastal hotel near the Indian Ocean",badge:"BEACH"},
+
+  {id:9,name:"Kilifi Creek House",location:"Kilifi",type:"airbnb",price:7500,img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6",desc:"Peaceful creek-side Airbnb escape",badge:"QUIET"},
+
+  {id:10,name:"Karen Forest Cabin",location:"Nairobi",type:"villa",price:9500,img:"https://images.unsplash.com/photo-1449844908441-8829872d2607",desc:"Forest-style cabin in Karen suburb",badge:"NATURE"},
+
+  {id:11,name:"Lake Elementaita Lodge",location:"Elementaita",type:"lodge",price:8200,img:"https://images.unsplash.com/photo-1501785888041-af3ef285b470",desc:"Lakeside lodge with flamingo views",badge:"LAKE"},
+
+  {id:12,name:"Diani Beach Airbnb Loft",location:"Diani",type:"airbnb",price:6800,img:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae",desc:"Modern loft steps from beach",badge:"LOFT"},
+
+  {id:13,name:"Tsavo Safari Lodge",location:"Tsavo",type:"lodge",price:11000,img:"https://images.unsplash.com/photo-1516426122078-c23e76319801",desc:"Deep safari wilderness lodge experience",badge:"WILD"},
+
+  {id:14,name:"Westlands Luxury Apartment",location:"Nairobi",type:"airbnb",price:8000,img:"https://images.unsplash.com/photo-1493809842364-78817add7ffb",desc:"Modern city Airbnb in Westlands",badge:"URBAN"},
+
+  {id:15,name:"Watamu Coral Villas",location:"Watamu",type:"villa",price:13000,img:"https://images.unsplash.com/photo-1505691723518-36a5ac3b2b1b",desc:"Luxury villas overlooking coral reefs",badge:"PREMIUM"}
+];
+
+let current = null;
+let filter = "all";
+
+/* =====================
+   RENDER
+===================== */
+function render(){
+  let search = document.getElementById("search").value.toLowerCase();
+  let grid = document.getElementById("grid");
+
+  let filtered = listings.filter(l =>
+    (filter==="all" || l.type===filter) &&
+    (l.name.toLowerCase().includes(search) || l.location.toLowerCase().includes(search))
+  );
+
+  grid.innerHTML = filtered.map(l=>`
+    <div class="card" onclick="openModal(${l.id})">
+      <div class="badge">${l.type}</div>
+      <img src="${l.img}">
+      <div style="padding:12px">
+        <h3>${l.name}</h3>
+        <p>${l.location}</p>
+        <b>KES ${l.price}/night</b>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* =====================
+   MODAL
+===================== */
+function openModal(id){
+  current = listings.find(l=>l.id===id);
+
+  document.getElementById("modal").style.display="flex";
+  document.getElementById("img").src=current.img;
+  document.getElementById("title").innerText=current.name;
+  document.getElementById("location").innerText=current.location;
+  document.getElementById("price").innerText="KES "+current.price;
+  document.getElementById("desc").innerText=current.desc;
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+/* =====================
+   CHECKOUT
+===================== */
+function openCheckout(){
+  if(!current) return;
+
+  document.getElementById("checkout").style.display="flex";
+  document.getElementById("summary").innerText =
+    current.name + " - " + current.location;
+
+  calculate();
+}
+
+function closeCheckout(){
+  document.getElementById("checkout").style.display="none";
+}
+
+/* PRICE CALC */
+function calculate(){
+  if(!current) return;
+
+  let ci = document.getElementById("ci").value;
+  let co = document.getElementById("co").value;
+
+  if(!ci || !co) return;
+
+  let nights = Math.max((new Date(co)-new Date(ci))/(1000*60*60*24),1);
+
+  document.getElementById("nights").innerText = nights;
+  document.getElementById("total").innerText =
+    "KES " + (nights * current.price);
+}
+
+/* listeners */
+document.addEventListener("input", (e)=>{
+  if(e.target.id==="ci" || e.target.id==="co"){
+    calculate();
+  }
+});
+
+/* =====================
+   CONFIRM BOOKING
+===================== */
+function confirmBooking(){
+  let ci = document.getElementById("ci").value;
+  let co = document.getElementById("co").value;
+  let guests = document.getElementById("guests").value;
+  let pay = document.getElementById("pay").value;
+
+  if(!ci || !co){
+    alert("Select dates");
+    return;
+  }
+
+  let booking = {
+    id:Date.now(),
+    property:current,
+    checkIn:ci,
+    checkOut:co,
+    guests,
+    payment:pay,
+    status:"confirmed"
+  };
+
+  let data = JSON.parse(localStorage.getItem("bookings"))||[];
+  data.push(booking);
+  localStorage.setItem("bookings",JSON.stringify(data));
+
+  closeCheckout();
+  closeModal();
+
+  alert(pay==="mpesa"
+    ? "📲 M-Pesa STK simulated"
+    : "💳 Card payment successful"
+  );
+}
+
+/* =====================
+   FILTER + INIT
+===================== */
+function setFilter(f){
+  filter=f;
+  render();
+}
+
+function goHome(){
+  window.location.href="index.html";
+}
+
+document.addEventListener("DOMContentLoaded",render);
+</script>
+
+</body>
+</html>1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
 
